@@ -1,17 +1,23 @@
 #Set all your object files (the object files of all the .c files in your project, e.g. main.o my_sub_functions.o )
 OBJ = src/main.o src/serial.o src/slip.o src/command.o src/render.o src/ini.o src/config.o src/input.o src/fx_cube.o src/usb.o src/audio.o src/usb_audio.o src/ringbuffer.o src/inprint2.o
 
-#Set any dependant header files so that if they are edited they cause a complete re-compile (e.g. main.h some_subfunctions.h some_definitions_file.h ), or leave blank
+#Set any dependent header files so that if they are edited they cause a complete re-compile (e.g. main.h some_subfunctions.h some_definitions_file.h ), or leave blank
 DEPS = src/serial.h src/slip.h src/command.h src/render.h src/ini.h src/config.h src/input.h src/fx_cube.h src/audio.h src/ringbuffer.h src/inline_font.h
 
 #Any special libraries you are using in your project (e.g. -lbcm2835 -lrt `pkg-config --libs gtk+-3.0` ), or leave blank
 INCLUDES = $(shell pkg-config --libs sdl2 libserialport)
 
+# Uncomment if additional libraries and/or dependencies (example for RG35XX)
+#CFLAGS = -L/opt/miyoo/lib -I/opt/miyoo/include/ -I/opt/miyoo/include/SDL2
+
 #Set any compiler flags you want to use (e.g. -I/usr/include/somefolder `pkg-config --cflags gtk+-3.0` ), or leave blank
 local_CFLAGS = $(CFLAGS) $(shell pkg-config --cflags sdl2 libserialport) -Wall -O2 -pipe -I.
 
+#Set when cross-compiling for other platform (example for RG35XX)
+#CROSS_COMPILE=/opt/miyoo/bin/arm-miyoo-linux-uclibcgnueabi-
+
 #Set the compiler you are using ( gcc for C or g++ for C++ )
-CC = gcc
+CC=${CROSS_COMPILE}gcc
 
 #Set the filename extensiton of your C files (e.g. .c or .cpp )
 EXTENSION = .c
